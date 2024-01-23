@@ -1,0 +1,202 @@
+if [[ ! -f project2A.c ]] ; then
+   echo "Cannot find file project2A.c.  Run this script in the same directory as as project2A.c"
+   echo "FAILED"
+   exit 1
+fi
+gcc project2A.c
+if [[ $? != 0 ]] ; then
+   echo "Cannot compile program project2A.c.  Fix your compile problem."
+   echo "FAILED"
+   exit 1
+fi
+
+./a.out > student.2A.$$
+
+X="15 is a composite number.
+21 is a composite number.
+25 is a composite number.
+27 is a composite number.
+33 is a composite number.
+35 is a composite number.
+39 is a composite number.
+45 is a composite number.
+49 is a composite number.
+51 is a composite number.
+55 is a composite number.
+57 is a composite number.
+63 is a composite number.
+65 is a composite number.
+69 is a composite number.
+75 is a composite number.
+77 is a composite number.
+81 is a composite number.
+85 is a composite number.
+87 is a composite number.
+91 is a composite number.
+93 is a composite number.
+95 is a composite number.
+99 is a composite number.
+105 is a composite number.
+111 is a composite number.
+115 is a composite number.
+117 is a composite number.
+119 is a composite number.
+121 is a composite number.
+123 is a composite number.
+125 is a composite number.
+129 is a composite number.
+133 is a composite number.
+135 is a composite number.
+141 is a composite number.
+143 is a composite number.
+145 is a composite number.
+147 is a composite number.
+153 is a composite number.
+155 is a composite number.
+159 is a composite number.
+161 is a composite number.
+165 is a composite number.
+169 is a composite number.
+171 is a composite number.
+175 is a composite number.
+177 is a composite number.
+183 is a composite number.
+185 is a composite number.
+187 is a composite number.
+189 is a composite number.
+195 is a composite number.
+201 is a composite number.
+203 is a composite number.
+205 is a composite number.
+207 is a composite number.
+209 is a composite number.
+213 is a composite number.
+215 is a composite number.
+217 is a composite number.
+219 is a composite number.
+221 is a composite number.
+225 is a composite number.
+231 is a composite number.
+235 is a composite number.
+237 is a composite number.
+243 is a composite number.
+245 is a composite number.
+247 is a composite number.
+249 is a composite number.
+253 is a composite number.
+255 is a composite number.
+259 is a composite number.
+261 is a composite number.
+265 is a composite number.
+267 is a composite number.
+273 is a composite number.
+275 is a composite number.
+279 is a composite number.
+285 is a composite number.
+287 is a composite number.
+289 is a composite number.
+291 is a composite number.
+295 is a composite number.
+297 is a composite number.
+299 is a composite number.
+301 is a composite number.
+303 is a composite number.
+305 is a composite number.
+309 is a composite number.
+315 is a composite number.
+319 is a composite number.
+321 is a composite number.
+323 is a composite number.
+325 is a composite number.
+327 is a composite number.
+329 is a composite number.
+333 is a composite number.
+335 is a composite number.
+339 is a composite number.
+341 is a composite number.
+343 is a composite number.
+345 is a composite number.
+351 is a composite number.
+355 is a composite number.
+357 is a composite number.
+361 is a composite number.
+363 is a composite number.
+365 is a composite number.
+369 is a composite number.
+371 is a composite number.
+375 is a composite number.
+377 is a composite number.
+381 is a composite number.
+385 is a composite number.
+387 is a composite number.
+391 is a composite number.
+393 is a composite number.
+395 is a composite number.
+399 is a composite number.
+403 is a composite number.
+405 is a composite number.
+407 is a composite number.
+411 is a composite number.
+413 is a composite number.
+415 is a composite number.
+417 is a composite number.
+423 is a composite number.
+425 is a composite number.
+427 is a composite number.
+429 is a composite number.
+435 is a composite number.
+437 is a composite number.
+441 is a composite number.
+445 is a composite number.
+447 is a composite number.
+451 is a composite number.
+453 is a composite number.
+455 is a composite number.
+459 is a composite number.
+465 is a composite number.
+469 is a composite number.
+471 is a composite number.
+473 is a composite number.
+475 is a composite number.
+477 is a composite number.
+481 is a composite number.
+483 is a composite number.
+485 is a composite number.
+489 is a composite number.
+493 is a composite number.
+495 is a composite number.
+497 is a composite number." 
+echo "$X"> correct.2A.$$
+
+diff student.2A.$$ correct.2A.$$ > /dev/null
+if [[ $? == 0 ]] ; then
+   echo "The output of your program matched the correct output."
+   echo "Success."
+   rm student.2A.$$ correct.2A.$$
+   exit 0
+fi
+
+lines_student=$(cat student.2A.$$ | wc -l)
+lines_correct=$(cat correct.2A.$$ | wc -l)
+if [[ $lines_student != $lines_correct ]] ; then
+    echo "The number of lines do not match: you have $lines_student and the correct version has $lines_correct"
+    rm student.2A.$$ correct.2A.$$
+    exit 1
+fi
+
+cat student.2A.$$ | head -n 1 > student.short2A.$$
+cat correct.2A.$$ | head -n 1 > correct.short2A.$$
+diff student.short2A.$$ correct.short2A.$$ > /dev/null
+if [[ $? != 0 ]] ; then
+   echo "The first line of your program is: "
+   cat student.short2A.$$
+   echo "But the correct first line is: "
+   cat correct.short2A.$$
+   rm student.2A.$$ correct.2A.$$
+   rm student.short2A.$$ correct.short2A.$$
+   exit 1
+fi
+
+echo "The program does not produce the correct output.  You should use the \"diff\" command to learn more.  Your output is called student.2A and the correct output is called correct.2A"
+mv student.2A.$$ student.2A
+mv correct.2A.$$ correct.2A
